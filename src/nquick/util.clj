@@ -1,6 +1,5 @@
 (ns nquick.util
-  (:require [clojure.java.io :as io]
-            [clojure.tools.cli :refer [cli]]))
+  (:require [clojure.java.io :as io]))
 
 (defn- user-prop [k]
   (System/getProperty (str "user." k)))
@@ -9,10 +8,31 @@
 (def nquick-directory (str home-directory "/.nquick"))
 (def nquick-default-file (str nquick-directory "/default.txt"))
 
-(defn check-dir [filename]
-  (if (not (.isDirectory (io/file nquick-directory)))
+(defn check-dir []
+  (when (not (.isDirectory (io/file nquick-directory)))
     (do 
       (.mkdir (io/file nquick-directory))
       (spit nquick-default-file "")
-      (println "dirs created"))
-    (println "ur good lol")))
+      (println "dirs created"))))
+
+(defn destroy-and-recreate []
+  (do
+    (spit nquick-default-file "")
+    (println "default note file cleaned")))
+
+;; for later
+; (def cli-options
+;   [["-p" "--port PORT" "Port number"
+;     :default 80
+;     :required "port number"
+;     :parse-fn #(Integer/parseInt %)
+;     :validate [#(< 0 % 0x10000) "must be number between 0 and 65536"]]
+;    ["-v" nil "Verbosity level"
+;     :id :verbosity
+;     :default 0
+;     :assoc-fn (fn [m k _] (update-in m [k] inc))]
+;    ["-h" "--help" "lol"]
+;    ["-f" "--file FILENAME" "Name of File"
+;     :id :filename
+;     :default util/nquick-default-file
+;     :validate [#(nil? (re-find #"\s+" %)) "filename can't have whitespace"]]])
