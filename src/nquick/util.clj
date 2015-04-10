@@ -1,5 +1,6 @@
 (ns nquick.util
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io]
+            [clojure.string :as string]))
 
 (defn- user-prop [k]
   (System/getProperty (str "user." k)))
@@ -20,10 +21,10 @@
     (spit nquick-default-file "")
     (println "default note file cleaned")))
 
-(def cli-options 
-  [[]
-   []
-   []])
+(defn mangle-name [s]
+  (->> s
+       (string/join "-")
+       (string/lower-case)))
 
 ;; for later
 ; (def cli-options
