@@ -20,6 +20,11 @@
     (spit nquick-default-file "")
     (println "default note file cleaned")))
 
+(def cli-options 
+  [[]
+   []
+   []])
+
 ;; for later
 ; (def cli-options
 ;   [["-p" "--port PORT" "Port number"
