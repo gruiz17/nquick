@@ -1,6 +1,7 @@
 (ns nquick.core
   (:require [nquick.core :as core]
             [nquick.util :as util]
+            [clojure.java.io :as io]
             [clojure.string :as string]
             [clojure.tools.cli :refer [parse-opts]]))
 
