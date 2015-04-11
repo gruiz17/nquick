@@ -22,9 +22,12 @@
     (println "default note file cleaned")))
 
 (defn mangle-name [s]
-  (->> s
+  (->> (string/split s #"\s")
        (string/join "-")
        (string/lower-case)))
+
+(def home-files-vec
+  (into [] (.list (clojure.java.io/file nquick.util/nquick-directory))))
 
 ;; for later
 ; (def cli-options
