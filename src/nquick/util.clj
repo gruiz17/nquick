@@ -7,7 +7,7 @@
 
 (def home-directory (user-prop "home"))
 (def nquick-directory (str home-directory "/.nquick"))
-(def nquick-default-file (str nquick-directory "/default.txt"))
+(def nquick-default-file (str nquick-directory "/default"))
 
 (defn check-dir []
   (when (not (.isDirectory (io/file nquick-directory)))
@@ -15,6 +15,12 @@
       (.mkdir (io/file nquick-directory))
       (spit nquick-default-file "")
       (println "dirs created"))))
+
+(defn check-default-file []
+  (when (not (.exists (io/file nquick-default-file)))
+    (do
+      (spit nquick-default-file "")
+      (println "basic default file created"))))
 
 (defn destroy-and-recreate []
   (do

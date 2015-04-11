@@ -13,10 +13,12 @@
   ([]
    (do
      (util/check-dir)
+     (util/check-default-file)
      (println (slurp util/nquick-default-file))))
   ([& args]
-   	(do
+   (do
       (util/check-dir)
+      (util/check-default-file)
       (if (= 1 (count args))
         (if (= "-flush" (first args))
           (util/destroy-and-recreate)

@@ -1,4 +1,4 @@
-(ns nquick.core
+(ns nquick.commands
   (:require [nquick.core :as core]
             [nquick.util :as util]
             [clojure.java.io :as io]
