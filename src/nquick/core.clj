@@ -1,5 +1,6 @@
 (ns nquick.core
   (:require [nquick.util :as util]
+            [nquick.commands :as commands]
             [clojure.string :as string]
             [clojure.tools.cli :refer [parse-opts]])
   (:gen-class))
@@ -9,18 +10,13 @@
   []
   (println util/home-directory))
 
+(def command-set #{"purge" "readnote" "write" "names" "help"})
+
 (defn -main 
   ([]
-   (do
-     (util/check-dir)
-     (util/check-default-file)
-     (println (slurp util/nquick-default-file))))
+   (commands/help))
   ([& args]
    (do
       (util/check-dir)
       (util/check-default-file)
-      (if (= 1 (count args))
-        (if (= "-flush" (first args))
-          (util/destroy-and-recreate)
-          (spit util/nquick-default-file (str (first args) "\n") :append true))
-      	(spit util/nquick-default-file (str (string/join " " args) "\n") :append true)))))
+      )))

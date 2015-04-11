@@ -1,11 +1,21 @@
 (ns nquick.commands
-  (:require [nquick.core :as core]
-            [nquick.util :as util]
+  (:require [nquick.util :as util]
             [clojure.java.io :as io]
+            [clojure.pprint :as pprint]
             [clojure.string :as string]
             [clojure.tools.cli :refer [parse-opts]]))
 
-(defn flush 
+;; helper to ask if sure
+(defn- ask-if-sure []
+  (let [answer (read-line)]
+    (cond 
+     (= answer "y") true
+     (= answer "n") false
+     :else (do 
+             (println "answer with y or n")
+             (ask-if-sure)))))
+
+(defn purge 
   ([] 
    (when (ask-if-sure)
      (do
@@ -20,28 +30,13 @@
            (println (str filename " deleted!")))
          (println "file can't be deleted!"))))))
 
-;; helper to ask if sure
-(defn- ask-if-sure []
-  (let [answer (read-line)]
-    (cond 
-     (= answer "y") true
-     (= answer "n") false
-     :else (do 
-             (println "answer with y or n")
-             (ask-if-sure)))))
-
-(defn read
+(defn readnote
   ([] (println (slurp util/nquick-default-file)))
   ([filename] 
    (let [full-path (str util/nquick-directory "/" filename)]
      (if (not (.exists (io/file full-path)))
        (println "file does not exist!")
        (println (slurp full-path))))))
-
-(defn write [s] 
-  (do
-    (println "Please write a title for note (blank for default): ")
-    (write-title-helper s)))
 
 ;; helper function to optionally give a title to the notes
 (defn- write-title-helper [text] 
@@ -60,15 +55,29 @@
         (println (str "written to " title "!"))
         (spit (str util/nquick-directory "/" (util/mangle-name title)) text)))))
 
+(defn write [s] 
+  (do
+    (println "Please write a title for note (blank for default): ")
+    (write-title-helper s)))
+
 (defn names [] 
   (doseq [i (range (count nquick.util/home-files-vec))]
     (println (get nquick.util/home-files-vec i))))
 
-(defn help [] ())
+(def lines-for-help 
+[{"command" "purge" "description" "Clears notes from default. Use flag '-n' with a filename to delete a certain note."}
+ {"command" "readnote" "description" "Reads your notes from default. Use flag '-n' with a name to read a certain note."}
+ {"command" "write" "description" "Write a note. Will prompt you for a title at the end. Leave blank to write more to default."}
+ {"command" "names" "description" "List all the titles of notes that you have."}
+ {"command" "help" "description" "Show this prompt you're seeing right now."}  
+])
+
+(defn help [] 
+ (pprint/print-table lines-for-help))
 
 (def command-map
-  {:flush flush
-   :read read
+  {:purge purge
+   :readnote readnote
    :write write
    :names names
    :help help })
