@@ -46,11 +46,11 @@
       (do
         (println "written to default!")
         (spit util/nquick-default-file text :append true))
-      (.exists (io/file (str util/nquick-directory "/" (util/mangle-name title))))
+     (.exists (io/file (str util/nquick-directory "/" (util/mangle-name title))))
       (do
         (println "that note already exists! pick another title. (blank for default)")
         (write-title-helper text))
-      :else 
+     :else 
       (do 
         (println (str "written to " title "!"))
         (spit (str util/nquick-directory "/" (util/mangle-name title)) text)))))
