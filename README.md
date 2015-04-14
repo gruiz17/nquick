@@ -7,15 +7,15 @@ I will keep adding to this as I get lazier about my note taking/get more ideas.
 ## Usage
 
 * `read` - to read your collected notes (optional `-n` for a specific note)
-* `write` - to write a note. This will prompt you for a title after you are done writing
+* `write {{whatever you want in here insert anything}}` - to write a note. This will prompt you for a title after you are done writing
 * `purge` - to purge your collected notes (optional `-n` to destroy a specific note)
 * `names` - to list notes you have written so far
 * `help` - to display help
 
 ## TODO
 
-* actually implement command line flags
-* testing
+* unit testing
+* think of more features
 
 ## Features
 
