@@ -1,6 +1,8 @@
-# nquick (unfinished)
+# nquick
 
 A note taker built just for me because I'm too lazy to open up Google Keep/Evernote/iNotes/another program.
+
+I will keep adding to this as I get lazier about my note taking/get more ideas.
 
 ## Usage
 
