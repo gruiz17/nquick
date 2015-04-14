@@ -72,7 +72,7 @@
 
 (def lines-for-help 
 [{"command" "purge" "description" "Clears notes from default. Use flag '-n' with a filename to delete a certain note."}
- {"command" "readnote" "description" "Reads your notes from default. Use flag '-n' with a name to read a certain note."}
+ {"command" "read" "description" "Reads your notes from default. Use flag '-n' with a name to read a certain note."}
  {"command" "write" "description" "Write a note. Will prompt you for a title at the end. Leave blank to write more to default."}
  {"command" "names" "description" "List all the titles of notes that you have."}
  {"command" "help" "description" "Show this prompt you're seeing right now."}  
@@ -83,7 +83,7 @@
 
 (def command-map
   {"purge" purge
-   "readnote" readnote
+   "read" readnote
    "write" write
    "names" names
    "help" help })

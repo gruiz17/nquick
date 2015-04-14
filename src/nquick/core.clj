@@ -10,11 +10,12 @@
   []
   (println util/home-directory))
 
-(def command-set #{"purge" "readnote" "write" "names" "help"})
+(def command-set #{"purge" "read" "write" "names" "help"})
 
 (def cli-options
   [["-n" "--name NAME" "note name"
-    :required "note name"]])
+    :required "note name"
+    :default "default"]])
 
 (defn -main 
   ([]
@@ -26,10 +27,10 @@
       (let [maincom (first args)]
         (if (not (contains? command-set maincom))
           (commands/help)
-          (if (contains? #{"readnote" "purge"} maincom)
+          (if (contains? #{"read" "purge"} maincom)
             (if (not (empty? (rest args)))
               (if (= "-n" (first (rest args)))
-                ((commands/command-map maincom) (((parse-opts rest cli-options) :options) :name))
+                ((commands/command-map maincom) (((parse-opts (rest args) cli-options) :options) :name))
                 (println "command not recognized."))
               ((commands/command-map maincom)))
             (if (= "write" maincom)
