@@ -7,28 +7,34 @@
 
 ;; helper to ask if sure
 (defn- ask-if-sure []
-  (let [answer (read-line)]
-    (cond 
-     (= answer "y") true
-     (= answer "n") false
-     :else (do 
-             (println "answer with y or n")
-             (ask-if-sure)))))
+  (do
+    (println "r u sure")
+    (let [answer (read-line)]
+      (cond 
+       (= answer "y") true
+       (= answer "n") false
+       :else (do 
+               (println "answer with y or n")
+               (ask-if-sure))))))
 
 (defn purge 
-  ([] 
-   (when (ask-if-sure)
-     (do
-       (spit util/nquick-default-file "")
-       (println "default note file cleaned."))))
+  ([]
+   (let [askval (ask-if-sure)]
+     (if askval
+       (do
+         (spit util/nquick-default-file "")
+         (println "default note file cleaned."))
+       (println "aborted."))))
   ([filename]
-   (when (ask-if-sure)
-     (let [fullpath (str util/nquick-directory "/" filename)]
-       (if (and (not (= filename "default")) (.exists (io/file fullpath)))
-         (do
-           (io/delete-file (str util/nquick-directory "/" filename) "")
-           (println (str filename " deleted!")))
-         (println "file can't be deleted!"))))))
+   (let [askval (ask-if-sure)]
+     (if askval
+       (let [fullpath (str util/nquick-directory "/"  (util/mangle-name filename))]
+         (if (and (not (= filename "default")) (.exists (io/file fullpath)))
+           (do
+             (io/delete-file (str util/nquick-directory "/" (util/mangle-name filename)) "")
+             (println (str filename " deleted!")))
+           (println "file can't be deleted!")))
+       (println "aborted.")))))
 
 (defn readnote
   ([] (println (slurp util/nquick-default-file)))
@@ -61,8 +67,8 @@
     (write-title-helper s)))
 
 (defn names [] 
-  (doseq [i (range (count nquick.util/home-files-vec))]
-    (println (get nquick.util/home-files-vec i))))
+  (doseq [i (range (count util/home-files-vec))]
+    (println (get util/home-files-vec i))))
 
 (def lines-for-help 
 [{"command" "purge" "description" "Clears notes from default. Use flag '-n' with a filename to delete a certain note."}
@@ -76,8 +82,8 @@
  (pprint/print-table lines-for-help))
 
 (def command-map
-  {:purge purge
-   :readnote readnote
-   :write write
-   :names names
-   :help help })
+  {"purge" purge
+   "readnote" readnote
+   "write" write
+   "names" names
+   "help" help })
