@@ -1,4 +1,4 @@
-(defproject nquick "0.0.1"
+(defproject nquick "0.0.2"
   :description "A very simple note taking app"
   :url "http://github.com/gruiz17/nquick"
   :license {:name "Eclipse Public License"
