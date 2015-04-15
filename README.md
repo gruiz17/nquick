@@ -9,7 +9,7 @@ I will keep adding to this as I get lazier about my note taking/get more ideas.
 ## Installation
 You have two options:
 
-1) download the binary from the releases.
+1) Download the binary from the [releases](https://github.com/gruiz17/nquick/releases).
 
 2) install [lein bin](https://github.com/Raynes/lein-bin) and run install.sh.
 
