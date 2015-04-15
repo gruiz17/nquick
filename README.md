@@ -1,6 +1,6 @@
 # nquick
 
-A note taker built just for me because I'm too lazy to open up Google Keep/Evernote/iNotes/another program. Currently on 0.0.2.
+A note taker built just for me because I'm too lazy to open up Google Keep/Evernote/iNotes/another program. Currently on 0.0.2.1.
 
 [Here](https://github.com/gruiz17/nquick/releases) is the latest release (includes binary).
 
